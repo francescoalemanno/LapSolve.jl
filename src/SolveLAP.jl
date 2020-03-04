@@ -2,7 +2,7 @@ module SolveLAP
 
 #### NOTICE!!!
 #### most functions in this file are taken with almost no modifications from https://github.com/Gnimuc/Hungarian.jl
-#### credit for those functions go to the original contributors: Yupei Qi <qiyupei@gmail.com>, et al   
+#### credit for those functions go to the original contributors: Yupei Qi <qiyupei@gmail.com>, et al
 #### --------------------------------------------------------------------------------------------------------
 
 using SparseArrays
@@ -71,8 +71,8 @@ function munkres!(costMat::AbstractMatrix{T}) where T <: Real
     Zs = spzeros(Int8, rowNum, colNum)
 
     # for tracking changes per row/col of A
-    Δrow = zeros(rowNum)
-    Δcol = zeros(colNum)
+    Δrow = zeros(T,rowNum)
+    Δcol = zeros(T,colNum)
 
     # "subtract" minimum from each row
     for i in 1:rowNum
@@ -340,7 +340,7 @@ function step3!(costMat::AbstractMatrix{T}, Zs, minLocations, rowCovered, colCov
         colCovered[i] ? push!(colCoveredIdx, i) : push!(colUncoveredIdx, i)
     end
 
-    h = Inf
+    h = typemax(T)
     @inbounds for j in colUncoveredIdx, i in rowUncoveredIdx
         cost = costMat[i,j] + Δcol[j] + Δrow[i]
         if cost <= h
