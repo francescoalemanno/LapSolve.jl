@@ -75,10 +75,10 @@ function munkres!(costMat::AbstractMatrix{T}) where T <: Real
     Δcol = zeros(T,colNum)
 
     # "subtract" minimum from each row
-    for i in 1:rowNum
+    @inbounds for i in 1:rowNum
         mw=typemax(T)
-        for j in 1:colNum
-            cost=costMat[i,j]+Δrow[i]+Δcol[j]
+        @inbounds for j in 1:colNum
+            cost=costMat[i,j]
             if cost<mw
                 mw=cost
             end
@@ -87,10 +87,10 @@ function munkres!(costMat::AbstractMatrix{T}) where T <: Real
     end
     # "subtract" minimum from each column
     if rowNum == colNum
-        for j in 1:colNum
+        @inbounds for j in 1:colNum
             mw=typemax(T)
-            for i in 1:rowNum
-                cost=costMat[i,j]+Δrow[i]+Δcol[j]
+            @inbounds for i in 1:rowNum
+                cost=costMat[i,j]+Δrow[i]
                 if cost<mw
                     mw=cost
                 end
