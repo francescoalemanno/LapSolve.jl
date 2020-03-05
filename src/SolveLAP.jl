@@ -108,7 +108,7 @@ function munkres!(costMat::AbstractMatrix{T}) where T <: Real
         # "consider a zero Z of the matrix;"
         r, c = ii.I
         cost=costMat[r,c]+Δrow[r]+Δcol[c]
-        if costMat[r,c] == 0
+        if cost == 0
             Zs[r,c] = Z
             # "if there is no starred zero in its row and none in its column, star Z.
             #  repeat, considering each zero in the matrix in turn;"
