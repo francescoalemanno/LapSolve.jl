@@ -104,10 +104,10 @@ function munkres!(costMat::AbstractMatrix{T}) where T <: Real
     # since looping through a row in a SparseMatrixCSC is costy(not cache-friendly),
     # a row to column index mapping of starred zeros is also tracked here.
     row2colSTAR = Dict{Int,Int}()
-    for ii in CartesianIndices(size(costMat))
-        # "consider a zero Z of the matrix;"
-        r, c = ii.I
+    for ii in CartesianIndices(costMat)
+        r,c=Tuple(ii)
         cost=costMat[r,c]+Δrow[r]+Δcol[c]
+        # "consider a zero Z of the matrix;"
         if cost == 0
             Zs[r,c] = Z
             # "if there is no starred zero in its row and none in its column, star Z.
