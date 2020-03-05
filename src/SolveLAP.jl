@@ -85,7 +85,7 @@ function munkres!(costMat::AbstractMatrix{T}) where T <: Real
     # "subtract" minimum from each column
     if rowNum == colNum
         @inbounds for j in 1:colNum
-            mw=costMat[i,1]+Δrow[i]
+            mw=costMat[1,j]+Δrow[1]
             @inbounds for i in 2:rowNum
                 mw=min(mw,costMat[i,j]+Δrow[i])
             end
