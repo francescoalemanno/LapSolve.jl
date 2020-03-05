@@ -71,17 +71,33 @@ function munkres!(costMat::AbstractMatrix{T}) where T <: Real
     Zs = spzeros(Int8, rowNum, colNum)
 
     # for tracking changes per row/col of A
-    Δrow = zeros(T,rowNum,1)
-    Δcol = zeros(T,1,colNum)
+    Δrow = zeros(T,rowNum)
+    Δcol = zeros(T,colNum)
 
     # "subtract" minimum from each row
-    Δrow .-= minimum(costMat,dims=2)
-
+    @inbounds for i in 1:rowNum
+        mw=typemax(T)
+        @inbounds for j in 1:colNum
+            cost=costMat[i,j]
+            if cost<mw
+                mw=cost
+            end
+        end
+        Δrow[i] = -mw
+    end
     # "subtract" minimum from each column
     if rowNum == colNum
-        Δcol .-= minimum(costMat.+Δrow,dims=1)
+        @inbounds for j in 1:colNum
+            mw=typemax(T)
+            @inbounds for i in 1:rowNum
+                cost=costMat[i,j]+Δrow[i]
+                if cost<mw
+                    mw=cost
+                end
+            end
+            Δcol[j] = -mw
+        end
     end
-
     # for tracking those starred zero
     rowSTAR = falses(rowNum)
     colSTAR = falses(colNum)
