@@ -78,7 +78,10 @@ function munkres!(costMat::AbstractMatrix{T}) where T <: Real
     @inbounds for i in 1:rowNum
         mw=costMat[i,1]
         @inbounds for j in 2:colNum
-            mw=min(mw,costMat[i,j])
+            cost=costMat[i,j]
+            if cost<mw
+                mw=cost
+            end
         end
         Δrow[i] = -mw
     end
@@ -87,7 +90,10 @@ function munkres!(costMat::AbstractMatrix{T}) where T <: Real
         @inbounds for j in 1:colNum
             mw=costMat[1,j]+Δrow[1]
             @inbounds for i in 2:rowNum
-                mw=min(mw,costMat[i,j]+Δrow[i])
+                cost=costMat[i,j]+Δrow[i]
+                if cost<mw
+                    mw=cost
+                end
             end
             Δcol[j] = -mw
         end
