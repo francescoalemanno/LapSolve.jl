@@ -1,5 +1,4 @@
 using SolveLAP
-using LinearAlgebra
 using Test
 
 @testset "simple examples" begin
@@ -27,7 +26,7 @@ using Test
           @test assign == [2, 1, 5]
           @test cost == 8
 
-          assign, cost = solve_lap(ones(5,5) - I)
+          assign, cost = solve_lap([ifelse(i-j==0,0,i*j) for i in 1:5, j in 1:5])
           @test assign == [1, 2, 3, 4, 5]
           @test cost == 0
       end

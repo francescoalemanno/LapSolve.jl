@@ -1,14 +1,13 @@
 name = "SolveLAP"
 uuid = "f5028efd-149e-4269-ab9a-65f8f0583d22"
-authors = ["Francesco Alemanno <francescoalemanno710@gmail.com>"]
+authors = ["Francesco Alemanno <francescoalemanno710@gmail.com>","Yupei Qi <qiyupei@gmail.com>"]
 version = "0.1.0"
 
 [deps]
-LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 SparseArrays = "2f01184e-e22b-5df5-ae63-d93ebab69eaf"
 
 [compat]
-julia = "1"
+julia = "^1.2"
 
 [extras]
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"

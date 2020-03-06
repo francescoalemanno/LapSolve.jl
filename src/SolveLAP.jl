@@ -6,7 +6,6 @@ module SolveLAP
 #### --------------------------------------------------------------------------------------------------------
 
 using SparseArrays
-using LinearAlgebra
 export solve_lap
 
 # Zero markers used in hungarian algorithm
