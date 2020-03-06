@@ -23,7 +23,7 @@ const PRIME = Int8(3)
 function solve_lap(costMat::AbstractMatrix)
     rowNum, colNum = size(costMat)
     # currently, the function `hungarian` automatically transposes `cost matrix` when there are more workers than jobs.
-    costMatrix = rowNum ≤ colNum ? costMat : costMat'
+    costMatrix = rowNum ≤ colNum ? costMat : transpose(costMat)
     matching = munkres!(costMatrix)
     assignment = zeros(Int, rowNum)
     rows = rowvals(matching)
@@ -108,7 +108,7 @@ function munkres!(costMat::AbstractMatrix{T}) where T <: Real
         r,c=Tuple(ii)
         cost=costMat[r,c]+Δrow[r]+Δcol[c]
         # "consider a zero Z of the matrix;"
-        if cost == 0
+        if iszero(cost)
             Zs[r,c] = Z
             # "if there is no starred zero in its row and none in its column, star Z.
             #  repeat, considering each zero in the matrix in turn;"
