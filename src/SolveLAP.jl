@@ -86,7 +86,7 @@ function solve_soft_lap(C::AbstractMatrix{T}, penalty=1.05) where T <: Real
         j<=n||(j=-1)
         c[k]=(i,j)
     end
-    c
+    [a for a in c if a[1]+a[2]>-2]
 end
 
 function build_matching(costMat::AbstractMatrix{T}) where T <: Real
@@ -147,12 +147,12 @@ function build_matching(costMat::AbstractMatrix{T}) where T <: Real
     end
     for i in Δcol
         if isinf(i)
-            error("A column contains only Inf, unsolvable problem")
+            error("A column contains only Inf, unsolvable problem via solve_lap, try solve_soft_lap")
         end
     end
     for i in Δrow
         if isinf(i)
-            error("A row contains only Inf, unsolvable problem")
+            error("A row contains only Inf, unsolvable problem via solve_lap, try solve_soft_lap")
         end
     end
 
