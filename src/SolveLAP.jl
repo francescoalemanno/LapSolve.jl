@@ -5,6 +5,30 @@ module SolveLAP
 #### credit for those functions go to the original contributors: Yupei Qi <qiyupei@gmail.com>, et al
 #### --------------------------------------------------------------------------------------------------------
 
+###### ORIGINAL LICENSE
+# MIT License
+#
+# Copyright (c) 2017 Yupei Qi and other contributors
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
+
 using SparseArrays
 export solve_lap
 
@@ -18,7 +42,23 @@ const Z = Int8(1)
 const STAR = Int8(2)
 const PRIME = Int8(3)
 
+"""
+solve_lap(cost_matrix) -> (assignment, cost)
 
+# Example
+```julia
+julia> using SolveLAP
+
+julia> M=rand(1:100,3,3)
+3×3 Array{Int64,2}:
+ 66  83  92
+ 17  92  65
+ 30  84  18
+
+julia> solve_lap(M)
+([2, 1, 3], 118)
+```
+"""
 function solve_lap(costMat::AbstractMatrix)
     rowNum, colNum = size(costMat)
     # currently, the function `hungarian` automatically transposes `cost matrix` when there are more workers than jobs.
