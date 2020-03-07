@@ -43,7 +43,7 @@ end
 
 function build_matching(costMat::AbstractMatrix{T}) where T <: Real
     rowNum, colNum = size(costMat)
-    colNum ≥ rowNum || throw(ArgumentError("Non-square matrix should have more columns than rows."))
+    colNum >= rowNum || throw(ArgumentError("Non-square matrix should have more columns than rows."))
 
     # preliminaries:
     # "no lines are covered;"
@@ -312,25 +312,7 @@ Step 3 of the original Munkres' Assignment Algorithm
 """
 function step3!(costMat::AbstractMatrix{T}, Zs, minLocations, rowCovered, colCovered, rowSTAR, row2colSTAR,
                 Δrow, Δcol, rowCoveredIdx, colCoveredIdx, rowUncoveredIdx, colUncoveredIdx) where T <: Real
-    # step 3(Step C):
-    # "let h denote the smallest uncovered element of the matrix;
-    #  add h to each covered row; then subtract h from each uncovered column."
-    #             -h                    ||
-    #              |     no change      ||  reduce old zeros
-    #              | change:(+h)+(-h)=0 ||     change: +h
-    #       +h ---------Covered Row-----||----Covered Row--------
-    #              |  Uncovered Column  ||   Covered Column
-    #==============|====================||================================#
-    #              |   Uncovered Row    ||    Uncovered Row
-    #              |  Uncovered Column  ||   Covered Column
-    #              |    change: -h      ||     change: 0
-    #              | produce new zeros  ||     no change
-    #              |                    ||
-    # since we always apply add/substract h to a whole row/column, it's unnecessary
-    # to apply every operation to every entry of A's row/column, we only need a row
-    # and a column vector to keep tracking those changes and use it when necessary.
 
-    # find h and track the location of those new zeros
     @inbounds for i in eachindex(rowCovered)
         rowCovered[i] ? push!(rowCoveredIdx, i) : push!(rowUncoveredIdx, i)
     end
