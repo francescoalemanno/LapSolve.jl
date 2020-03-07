@@ -23,7 +23,7 @@ function solve_lap(costMat::AbstractMatrix)
     rowNum, colNum = size(costMat)
     # currently, the function `hungarian` automatically transposes `cost matrix` when there are more workers than jobs.
     costMatrix = rowNum <= colNum ? costMat : transpose(costMat)
-    matching = munkres!(costMatrix)
+    matching = build_matching(costMatrix)
     assignment = zeros(Int, rowNum)
     rows = rowvals(matching)
     for c = 1:size(matching,2), i in nzrange(matching, c)
@@ -41,7 +41,7 @@ function solve_lap(costMat::AbstractMatrix)
     return assignment,cost
 end
 
-function munkres!(costMat::AbstractMatrix{T}) where T <: Real
+function build_matching(costMat::AbstractMatrix{T}) where T <: Real
     rowNum, colNum = size(costMat)
     colNum ≥ rowNum || throw(ArgumentError("Non-square matrix should have more columns than rows."))
 
