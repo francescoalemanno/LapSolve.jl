@@ -66,6 +66,9 @@ function solve_soft_lap(C::AbstractMatrix{T}, penalty=1.05) where T <: Real
             minG=min(cost,minG)
         end
     end
+    if isinf(maxG) || isinf(minG)
+        error("No vertexes allow a solution.")
+    end
     for i = 1:m, j=1:n
         G[j+m,i+n]=minG
     end
@@ -75,7 +78,15 @@ function solve_soft_lap(C::AbstractMatrix{T}, penalty=1.05) where T <: Real
     for j = 1:n
         G[j+m,j]=maxG*penalty
     end
-    solve_lap(G)
+    assignment,cost=solve_lap(G)
+    c=[(i,assignment[i]) for i in 1:(m+n)]
+    for k in eachindex(c)
+        i,j=c[k]
+        i<=m||(i=-1)
+        j<=n||(j=-1)
+        c[k]=(i,j)
+    end
+    c
 end
 
 function build_matching(costMat::AbstractMatrix{T}) where T <: Real
@@ -134,6 +145,17 @@ function build_matching(costMat::AbstractMatrix{T}) where T <: Real
             Δcol[j] = -mw
         end
     end
+    for i in Δcol
+        if isinf(i)
+            error("A column contains only Inf, unsolvable problem")
+        end
+    end
+    for i in Δrow
+        if isinf(i)
+            error("A row contains only Inf, unsolvable problem")
+        end
+    end
+
     # for tracking those starred zero
     rowSTAR = falses(rowNum)
     colSTAR = falses(colNum)
