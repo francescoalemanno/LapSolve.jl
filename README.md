@@ -1,6 +1,12 @@
 # SolveLAP
 Linear Assignment Problem solver via the Kuhn-Munkres algorithm
 
+[![Build Status](https://travis-ci.com/francescoalemanno/SolveLAP.jl.svg?branch=master)](https://travis-ci.com/francescoalemanno/SolveLAP.jl)
+
+[![codecov](https://codecov.io/gh/francescoalemanno/SolveLAP.jl/branch/master/graph/badge.svg)](https://codecov.io/gh/francescoalemanno/SolveLAP.jl)
+
+
+
 ### Example
 ```julia
 julia> using SolveLAP
