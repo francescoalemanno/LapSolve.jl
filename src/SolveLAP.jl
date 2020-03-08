@@ -2,7 +2,7 @@ module SolveLAP
 ##### PLEASE READ THE NOTICE ON THE BOTTOM, for the original license and authors
 
 using SparseArrays
-export solve_lap, solve_soft_lap
+export solve_lap, solve_stiff_lap
 
 # Zero markers used in hungarian algorithm
 # 0 => NON   => Non-zero
@@ -52,7 +52,7 @@ function solve_lap(costMat::AbstractMatrix)
     cost = sum(costMat[i...] for i in zip(1:rowNum, assignment) if i[2] != 0)
     return assignment,cost
 end
-function solve_soft_lap(C::AbstractMatrix{T}, penalty=1.05) where T <: Real
+function solve_stiff_lap(C::AbstractMatrix{T}, penalty=1.05) where T <: Real
     m,n=size(C)
     G=similar(C,m+n,m+n)
     G.=typemax(T)
@@ -147,12 +147,12 @@ function build_matching(costMat::AbstractMatrix{T}) where T <: Real
     end
     for i in Δcol
         if isinf(i)
-            error("A column contains only Inf, unsolvable problem via solve_lap, try solve_soft_lap")
+            error("A column contains only Inf, unsolvable problem via solve_lap, try solve_stiff_lap")
         end
     end
     for i in Δrow
         if isinf(i)
-            error("A row contains only Inf, unsolvable problem via solve_lap, try solve_soft_lap")
+            error("A row contains only Inf, unsolvable problem via solve_lap, try solve_stiff_lap")
         end
     end
 

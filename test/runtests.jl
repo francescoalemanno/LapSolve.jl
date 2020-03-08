@@ -56,14 +56,14 @@ end
     @test cost   == 343
 end
 
-@testset "Soft Problem" begin
+@testset "stiff Problem" begin
     M=[0.08886586609282232 0.5001403306848344;
        0.6848622386100172 0.1379247179005112;
        0.9410463734407415 0.30774601623574327]
     A=[Inf Inf 1000.0;
      0.5266269523801999 Inf Inf;
       0.9238847081919377 Inf 0.6017336762941108]
-    @test solve_soft_lap(M)[1:3]==[(1, 1), (2, 2), (3, -1)]
-    @test solve_soft_lap(A)[1:3]== [(1, -1), (2, 1), (3, 3)]
+    @test solve_stiff_lap(M)[1:3]==[(1, 1), (2, 2), (3, -1)]
+    @test solve_stiff_lap(A)[1:3]== [(1, -1), (2, 1), (3, 3)]
     @test_throws ErrorException solve_lap(A)
 end
