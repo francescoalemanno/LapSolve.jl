@@ -5,7 +5,7 @@ Linear Assignment Problem solver via the Kuhn-Munkres algorithm
 
 [![codecov](https://codecov.io/gh/francescoalemanno/SolveLAP.jl/branch/master/graph/badge.svg)](https://codecov.io/gh/francescoalemanno/SolveLAP.jl)
 
-
+[![Coverage Status](https://coveralls.io/repos/github/francescoalemanno/SolveLAP.jl/badge.svg?branch=master)](https://coveralls.io/github/francescoalemanno/SolveLAP.jl?branch=master)
 
 ### Example
 ```julia
