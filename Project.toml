@@ -1,7 +1,7 @@
 name = "SolveLAP"
 uuid = "f5028efd-149e-4269-ab9a-65f8f0583d22"
 authors = ["Francesco Alemanno <francescoalemanno710@gmail.com>"]
-version = "0.2.0"
+version = "0.3.0"
 
 [deps]
 SparseArrays = "2f01184e-e22b-5df5-ae63-d93ebab69eaf"
