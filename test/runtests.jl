@@ -1,18 +1,5 @@
 using SolveLAP
 using Test
-@testset "StiffWrapper" begin
-      A=[Inf Inf 1000.0;
-       0.5266269523801999 Inf Inf;
-        0.9238847081919377 Inf 0.6017336762941108]
-        sA=[Inf Inf 1000.0 1050.0 Inf Inf;
-        0.5266269523801999 Inf Inf Inf 1050.0 Inf;
-        0.9238847081919377 Inf 0.6017336762941108 Inf Inf 1050.0;
-        1050.0 Inf Inf Inf 0.5266269523801999 0.5266269523801999;
-        Inf 1050.0 Inf Inf Inf Inf;
-        Inf Inf 1050.0 0.5266269523801999 Inf 0.5266269523801999]
-        @test SolveLAP.StiffWrapper(A,1.05)==sA
-end
-
 
 @testset "simple examples" begin
       @testset "simple examples" begin
