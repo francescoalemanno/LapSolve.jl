@@ -1,9 +1,8 @@
 module SolveLAP
 ##### PLEASE READ THE NOTICE ON THE BOTTOM, for the original license and authors
-
 using SparseArrays
 export solve_lap, solve_stiff_lap
-
+include("StiffWrapper.jl")
 # Zero markers used in hungarian algorithm
 # 0 => NON   => Non-zero
 # 1 => Z     => ordinary zero
@@ -52,33 +51,10 @@ function solve_lap(costMat::AbstractMatrix)
     cost = sum(costMat[i...] for i in zip(1:rowNum, assignment) if i[2] != 0)
     return assignment,cost
 end
+
 function solve_stiff_lap(C::AbstractMatrix{T}, penalty=1.05) where T <: Real
     m,n=size(C)
-    G=similar(C,m+n,m+n)
-    G.=typemax(T)
-    maxG=-Inf
-    minG=Inf
-    for i = 1:m, j=1:n
-        cost=C[i,j]
-        G[i,j]=cost
-        if !isinf(cost)
-            maxG=max(cost,maxG)
-            minG=min(cost,minG)
-        end
-    end
-    if isinf(maxG) || isinf(minG)
-        error("No vertexes allow a solution.")
-    end
-    for i = 1:m, j=1:n
-        G[j+m,i+n]=minG
-    end
-    for i = 1:m
-        G[i,i+n]=maxG*penalty
-    end
-    for j = 1:n
-        G[j+m,j]=maxG*penalty
-    end
-    assignment,cost=solve_lap(G)
+    assignment,cost=solve_lap(StiffWrapper(C,penalty))
     c=[(i,assignment[i]) for i in 1:(m+n)]
     for k in eachindex(c)
         i,j=c[k]
