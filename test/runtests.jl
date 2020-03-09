@@ -1,4 +1,4 @@
-using SolveLAP
+using LapSolve
 using Test
 
 @testset "StiffWrapper" begin
@@ -17,7 +17,7 @@ using Test
           Inf Inf 18.0 Inf Inf 0.0 0.0 0.0 0.0 0.0;
           Inf Inf Inf 18.0 Inf 0.0 0.0 0.0 0.0 0.0;
           Inf Inf Inf Inf 18.0 0.0 0.0 0.0 0.0 0.0]
-      W=SolveLAP.StiffWrapper(A,2)
+      W=LapSolve.StiffWrapper(A,2)
       okay=true
       for i in eachindex(M,W)
             M[i]==W[i] || (okay=false; break)
