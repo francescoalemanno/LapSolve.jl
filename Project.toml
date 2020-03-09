@@ -1,4 +1,4 @@
-name = "SolveLAP"
+name = "LapSolve"
 uuid = "f5028efd-149e-4269-ab9a-65f8f0583d22"
 authors = ["Francesco Alemanno <francescoalemanno710@gmail.com>"]
 version = "1.0.0"
