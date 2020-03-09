@@ -1,5 +1,5 @@
 # SolveLAP
-Linear Assignment Problem solver via the Kuhn-Munkres algorithm, original Kernel functions coming from [Hungarian.jl](https://github.com/Gnimuc/Hungarian.jl), this package implements a solver for stiff problems, which are LAP problems with too many blocking costs where an optimal fully assigned solution is impossible, but an optimal partial assignment may be possible. This solver has been modified to be completely non-copying and non-mutating, for saving as much memory as possible.
+Linear Assignment Problem solver via the Kuhn-Munkres algorithm, original Kernel functions come from the excellent [Hungarian.jl](https://github.com/Gnimuc/Hungarian.jl), this package adds a solver for stiff problems, which are LAP problems with too many blocking costs where an optimal fully assigned solution is impossible, but an optimal partial assignment may be possible. This solver has been modified to be completely non-copying and non-mutating, for saving as much memory as possible (this modification has also been sent upstream [#15](https://github.com/Gnimuc/Hungarian.jl/pull/15), although in some cases Hungarian.jl will still copy).
 
 [![Build Status](https://travis-ci.com/francescoalemanno/SolveLAP.jl.svg?branch=master)](https://travis-ci.com/francescoalemanno/SolveLAP.jl)
 
