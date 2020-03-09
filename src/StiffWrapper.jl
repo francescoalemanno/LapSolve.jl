@@ -15,7 +15,7 @@ struct StiffWrapper{T,S} <: AbstractMatrix{T}
             minV=min(minV,v)
         end
         if isinf(maxV) || isinf(minV)
-            error("Problem is unsolvable")
+            maxV=minV=zero(T)
         end
         trasl=-minV
         if iszero(maxV+trasl)
