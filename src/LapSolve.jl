@@ -1,4 +1,4 @@
-module SolveLAP
+module LapSolve
 ##### PLEASE READ THE NOTICE ON THE BOTTOM, to know the original authors of this code
 using SparseArrays
 export solve_lap, solve_stiff_lap
@@ -18,7 +18,7 @@ solve_lap(cost_matrix) -> (assignment, cost)
 
 # Example
 ```julia
-julia> using SolveLAP
+julia> using LapSolve
 
 julia> M=rand(1:100,3,3)
 3×3 Array{Int64,2}:
@@ -57,7 +57,7 @@ solve_stiff_lap(cost_matrix) -> assignment in cartesian coords
 
 # Example
 ```julia
-julia> using SolveLAP
+julia> using LapSolve
 
 julia> M=rand([1,2,Inf],5,5)
 5×5 Array{Float64,2}:
