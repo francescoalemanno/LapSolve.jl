@@ -32,7 +32,7 @@ julia> solve_lap(M)
 """
 function solve_lap(costMat::AbstractMatrix)
     rowNum, colNum = size(costMat)
-    # currently, the function `hungarian` automatically transposes `cost matrix` when there are more workers than jobs.
+    # currently, the function `solve_lap` automatically transposes `cost matrix` when there are more workers than jobs.
     costMatrix = rowNum <= colNum ? costMat : transpose(costMat)
     matching = build_matching(costMatrix)
     assignment = zeros(Int, rowNum)
@@ -89,7 +89,7 @@ function solve_stiff_lap(C::AbstractMatrix{T}, penalty=1.05) where T <: Real
     end
     [a for a in c if a[1]+a[2]>-2]
 end
-
+const suggeststiffsolver="in the cost matrix contains only Inf, unsolvable problem via solve_lap, try solve_stiff_lap"
 function build_matching(costMat::AbstractMatrix{T}) where T <: Real
     rowNum, colNum = size(costMat)
     colNum >= rowNum || throw(ArgumentError("Non-square matrix should have more columns than rows."))
@@ -133,6 +133,9 @@ function build_matching(costMat::AbstractMatrix{T}) where T <: Real
         end
         Δrow[i] = -mw
     end
+    for i in Δrow
+        isinf(i) && error("row $i $suggeststiffsolver")
+    end
     # "subtract" minimum from each column
     if rowNum == colNum
         @inbounds for j in 1:colNum
@@ -147,14 +150,7 @@ function build_matching(costMat::AbstractMatrix{T}) where T <: Real
         end
     end
     for i in Δcol
-        if isinf(i)
-            error("A column contains only Inf, unsolvable problem via solve_lap, try solve_stiff_lap")
-        end
-    end
-    for i in Δrow
-        if isinf(i)
-            error("A row contains only Inf, unsolvable problem via solve_lap, try solve_stiff_lap")
-        end
+        isinf(i) && error("column $i $suggeststiffsolver")
     end
 
     # for tracking those starred zero

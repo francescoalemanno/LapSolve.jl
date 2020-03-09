@@ -1,6 +1,31 @@
 using SolveLAP
 using Test
 
+@testset "StiffWrapper" begin
+     A = [3.0 5.0 6.0 9.0 9.0;
+          2.0 4.0 3.0 5.0 6.0;
+          4.0 1.0 4.0 9.0 9.0;
+          4.0 7.0 8.0 5.0 10.0;
+          1.0 1.0 10.0 10.0 5.0]
+     M = [2.0 4.0 5.0 8.0 8.0 18.0 Inf Inf Inf Inf;
+          1.0 3.0 2.0 4.0 5.0 Inf 18.0 Inf Inf Inf;
+          3.0 0.0 3.0 8.0 8.0 Inf Inf 18.0 Inf Inf;
+          3.0 6.0 7.0 4.0 9.0 Inf Inf Inf 18.0 Inf;
+          0.0 0.0 9.0 9.0 4.0 Inf Inf Inf Inf 18.0;
+          18.0 Inf Inf Inf Inf 0.0 0.0 0.0 0.0 0.0;
+          Inf 18.0 Inf Inf Inf 0.0 0.0 0.0 0.0 0.0;
+          Inf Inf 18.0 Inf Inf 0.0 0.0 0.0 0.0 0.0;
+          Inf Inf Inf 18.0 Inf 0.0 0.0 0.0 0.0 0.0;
+          Inf Inf Inf Inf 18.0 0.0 0.0 0.0 0.0 0.0]
+      W=SolveLAP.StiffWrapper(A,2)
+      okay=true
+      for i in eachindex(M,W)
+            M[i]==W[i] || (okay=false; break)
+      end
+      @test typeof(first(eachindex(M,W))) <: CartesianIndex
+      @test okay
+end
+
 @testset "simple examples" begin
       @testset "simple examples" begin
           A = [ 0.891171  0.0320582   0.564188  0.8999    0.620615;

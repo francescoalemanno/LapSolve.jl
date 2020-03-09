@@ -10,7 +10,7 @@ struct StiffWrapper{T,S} <: AbstractMatrix{T}
         minV=typemax(T)
         for i in eachindex(A)
             v=A[i]
-            isinf(v)&&continue
+            isinf(v) && continue
             maxV=max(maxV,v)
             minV=min(minV,v)
         end
