@@ -37,8 +37,9 @@ end
     (n+m,n+m)
 end
 @inline function getindex(A::StiffWrapper{T},i::Int,j::Int) where {T}
+    @boundscheck checkbounds(A,i,j)
+    @inbounds begin
     n,m=size_parent(A)
-    @fastmath begin
     if i<=n && j<=m
         return A.parent[i,j]+A.translation
     end
@@ -52,5 +53,5 @@ end
         end
     end
     return typemax(T)
-end
+    end
 end
